@@ -51,7 +51,7 @@ const CarInfo = ({ params }) => {
 
             <div>
                 <h3 className='text-3xl font-bold py-7'>Add A Comment</h3>
-                <form class="max-w-5xl ">
+                <form class="lg:max-w-5xl w-full">
                     <div className='flex gap-5  items-center w-full'>
                         <div class=" border-b border-[#ff6900] py-2">
                             <input class="appearance-none bg-transparent border-none w-full text-gray-700 py-1 px-2 leading-tight focus:outline-none" type="text" placeholder="Jane Doe" aria-label="Full name" />
@@ -65,9 +65,10 @@ const CarInfo = ({ params }) => {
                     <div class=" border-b border-[#ff6900] py-2">
                         <input class="appearance-none bg-transparent border-none w-full text-gray-700 py-1 px-2 leading-tight focus:outline-none" type="text" placeholder="Description" aria-label="Full name" />
                     </div>
-
-                    <button className='py-3 px-5 text-xl border-2'>Add Commant</button>
+                    <button className='py-3 px-5 text-xl border-2 mt-5'>Add Commant</button>
+                   
                 </form>
+               
             </div>
         </div>
     );
