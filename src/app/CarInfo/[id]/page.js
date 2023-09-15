@@ -1,11 +1,51 @@
+'use client'
 import productsdata from '@/app/products';
 import Image from 'next/image';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 const CarInfo = ({ params }) => {
+    const [comments, setComments] = useState([]);
 
-    const car = productsdata.find((product => product.id == params.id))
+    useEffect(() => {
 
+        const StoreComments = JSON.parse(localStorage.getItem('comments'))
+        if (StoreComments) {
+            setComments(StoreComments)
+        }
+    }, [])
+
+
+    const car = params && params.id
+        ? productsdata.find(product => product.id == params.id)
+        : null;
+
+    if (!car) {
+        return <div>Car not found</div>;
+    }
+
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        console.log(e.target);
+        const name = e.target.fullName.value;
+        const Description = e.target.Description.value;
+        const email = e.target.email.value;
+
+        console.log(name, Description, email);
+
+        const newComments = {
+            name, Description, email
+        }
+
+        setComments([...comments, newComments])
+        localStorage.setItem('comments', JSON.stringify([...comments, newComments]))
+
+        e.target.fullName.value = '';
+        e.target.Description.value = '';
+        e.target.email.value = '';
+
+
+    }
 
     return (
         <div className='max-w-7xl mx-auto  py-40'>
@@ -49,26 +89,89 @@ const CarInfo = ({ params }) => {
                 </p>
             </div>
 
-            <div>
-                <h3 className='text-3xl font-bold py-7'>Add A Comment</h3>
-                <form class="lg:max-w-5xl w-full">
+
+            <div className='my-5'>
+                <h3 className='text-2xl font-bold py-7'>Add A Comment</h3>
+                <div className='border-b-2 py-4 w-full flex gap-2 '>
+                    <Image
+                        className='rounded-full'
+                        src='https://img.freepik.com/free-photo/portrait-smiley-man-outdoor_23-2148514954.jpg?w=1380&t=st=1694773632~exp=1694774232~hmac=48b4427aefb4769bf91f54d833d1098268e37d17e90ce4606e28c4c41ddd73db'
+                        height={100}
+                        width={100}
+                        objectFit="cover"
+                        alt="Picture of the banner"
+                    />
+                    <div>
+                        <h3 className='text-lg font-semibold'>nice</h3>
+                        <p>akbor@gmail.com</p>
+                    </div>
+                </div>
+
+                {
+                    comments.map((comment) => (
+                        <div key={comment.name} className='border-b-2 py-4 w-full flex gap-2'>
+                            <Image
+                                className='rounded-full'
+                                src='https://img.freepik.com/free-photo/portrait-smiley-man-outdoor_23-2148514954.jpg?w=1380&t=st=1694773632~exp=1694774232~hmac=48b4427aefb4769bf91f54d833d1098268e37d17e90ce4606e28c4c41ddd73db'
+                                height={100}
+                                width={100}
+                                objectFit="cover"
+                                alt="Picture of the banner"
+                            />
+                            <div>
+                                <h3 className='text-lg font-semibold'>{comment.Description}</h3>
+                                <p>{comment.name}</p>
+                            </div>
+                        </div>
+                    ))
+                }
+            </div>
+
+            <div className='my-20'>
+
+                <form onSubmit={handleSubmit}
+                    class="lg:max-w-5xl w-full">
                     <div className='flex gap-5  items-center w-full'>
+
                         <div class=" border-b border-[#ff6900] py-2">
-                            <input class="appearance-none bg-transparent border-none w-full text-gray-700 py-1 px-2 leading-tight focus:outline-none" type="text" placeholder="Jane Doe" aria-label="Full name" />
+                            <input
+                                name="fullName"
+                                class="appearance-none bg-transparent border-none w-full text-gray-700 py-1 px-2 leading-tight focus:outline-none"
+                                type="text"
+                                placeholder="Jane Doe"
+                                aria-label="Full name"
+                            />
 
                         </div>
                         <div class=" border-b border-[#ff6900] py-2">
-                            <input class="appearance-none bg-transparent border-none w-full text-gray-700 py-1 px-2 leading-tight focus:outline-none" type="email" placeholder="Janedoe@gmail.com" aria-label="Full name" />
+                            <input
+                                name="email"
+                                class="appearance-none bg-transparent border-none w-full text-gray-700 py-1 px-2 leading-tight focus:outline-none"
+                                type="text"
+                                placeholder="JaneDoe@gmail.com"
+                                aria-label="email"
+                            />
 
                         </div>
                     </div>
                     <div class=" border-b border-[#ff6900] py-2">
-                        <input class="appearance-none bg-transparent border-none w-full text-gray-700 py-1 px-2 leading-tight focus:outline-none" type="text" placeholder="Description" aria-label="Full name" />
+                        <input
+                            name="Description"
+                            class="appearance-none bg-transparent border-none w-full text-gray-700 py-1 px-2 leading-tight focus:outline-none"
+                            type="text"
+                            placeholder="Description"
+                            aria-label="Description"
+                        />
+
                     </div>
-                    <button className='py-3 px-5 text-xl border-2 mt-5'>Add Commant</button>
-                   
+                    <button
+                        type='submit'
+                        className='py-3 px-5 text-xl border-2 mt-5'>
+                        Add Comment
+                    </button>
+
                 </form>
-               
+
             </div>
         </div>
     );

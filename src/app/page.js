@@ -1,5 +1,4 @@
 
-import Header from './Component/Header'
 import Bannar from './Component/Bannar'
 import Testimonials from './Component/Testimonials'
 import Car from './Component/Car'
@@ -14,7 +13,10 @@ export default function Home() {
      <Car></Car>
 
      <Testimonials></Testimonials>
+     
      <Byecar></Byecar>
+    
+     
      
      
     

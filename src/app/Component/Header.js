@@ -46,8 +46,8 @@ const Header = () => {
             title: 'About'
         },
         {
-            path: '/contuct',
-            title: 'Contuct'
+            path: '/faq',
+            title: 'Faq'
         },
         {
             path: '/regestar',
